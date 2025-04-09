@@ -1,5 +1,5 @@
 <?php 
-require  "Pokemon.php";
+require_once  "Pokemon.php";
 class PlantPokemon extends Pokemon{
     public function attackFire(FirePokemon $target){
         $rand=rand(1,100);

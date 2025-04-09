@@ -1,7 +1,7 @@
 <?php 
 session_start();
 require  "Pokemon.php";
-//require  "SpecialPokemon.php";
+require_once "SpecialPokemon.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -132,13 +132,13 @@ require  "Pokemon.php";
                     $pokemons[] = new Pokemon("Pikachu", "pikachu.gif", 50, $atk1);
                 } elseif ($choice == 'water_pokemon') {
                     $atk2 = new AttackPokemon(4, 12, 1.5, 50); 
-                    $pokemons[] = new Pokemon("water_pokemon", "water_pokemon.gif", 50, $atk2);
+                    $pokemons[] = new WaterPokemon("water_pokemon", "water_pokemon.gif", 50, $atk2);
                 }else if ($choice == 'fire_pokemon') {
                     $atk3 = new AttackPokemon(4, 12, 1.5, 50); 
-                    $pokemons[] = new Pokemon("fire_pokemon", "fire_pokemon.gif", 50, $atk3);
+                    $pokemons[] = new FirePokemon("fire_pokemon", "fire_pokemon.gif", 50, $atk3);
                 }else if ($choice == 'plant_pokemon') {
                     $atk4 = new AttackPokemon(4, 12, 1.5, 50); 
-                    $pokemons[] = new Pokemon("plant_pokemon", "plant_pokemon.gif", 100, $atk4);
+                    $pokemons[] = new PlantPokemon("plant_pokemon", "plant_pokemon.gif", 100, $atk4);
                 }
             }
             fight($pokemons[0],$pokemons[1]);

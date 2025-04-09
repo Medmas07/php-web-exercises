@@ -1,6 +1,5 @@
 
 <?php
-
 class AttackPokemon {
     public $attackMinimal;
     public $attackMaximal;
@@ -96,6 +95,7 @@ class Pokemon {
     }
 }
 
+
 function affiche_pokemon(Pokemon $p1, Pokemon $p2) {
    /* echo "<div class='container1'>";
     echo $p1->getStatsHTML();
@@ -136,15 +136,44 @@ function fight(Pokemon $p1, Pokemon $p2) {
         echo "<div style='background-color: #f4bcbc; margin: 20px auto; padding: 10px; width: 80%; border-radius: 8px;'>
         <strong >ROUND $round</strong><br>
         <div style='display: flex; justify-content: space-around;'>";
-        $p1->attack($p2);
+        if ($p1 instanceof FirePokemon && $p2 instanceof PlantPokemon) {
+            $p1->attackPlant($p2);
+        } elseif ($p1 instanceof FirePokemon && $p2 instanceof WaterPokemon) {
+            $p1->attackWater($p2);
+        } elseif ($p1 instanceof WaterPokemon && $p2 instanceof FirePokemon) {
+            $p1->attackFire($p2);
+        } elseif ($p1 instanceof WaterPokemon && $p2 instanceof PlantPokemon) {
+            $p1->attackPlant($p2);
+        } elseif ($p1 instanceof PlantPokemon && $p2 instanceof WaterPokemon) {
+            $p1->attackWater($p2);
+        } elseif ($p1 instanceof PlantPokemon && $p2 instanceof FirePokemon) {
+            $p1->attackFire($p2);
+        } else {
+            $p1->attack($p2);
+        }
 
-        if (!$p2->isDead()) {
+        if ($p2->isDead()) break;
+
+        if ($p2 instanceof FirePokemon && $p1 instanceof PlantPokemon) {
+            $p2->attackPlant($p1);
+        } elseif ($p2 instanceof FirePokemon && $p1 instanceof WaterPokemon) {
+            $p2->attackWater($p1);
+        } elseif ($p2 instanceof WaterPokemon && $p1 instanceof FirePokemon) {
+            $p2->attackFire($p1);
+        } elseif ($p2 instanceof WaterPokemon && $p1 instanceof PlantPokemon) {
+            $p2->attackPlant($p1);
+        } elseif ($p2 instanceof PlantPokemon && $p1 instanceof WaterPokemon) {
+            $p2->attackWater($p1);
+        } elseif ($p2 instanceof PlantPokemon && $p1 instanceof FirePokemon) {
+            $p2->attackFire($p1);
+        } else {
             $p2->attack($p1);
         }
         echo "</div></div><br>";
         
         $round++;
     }
+    echo "</div></div>";
 
     echo "<div style='background-color:rgb(59, 183, 96);'><strong style='font-size:50px;'>Résultat du combat :</strong><br>";
     if ($p1->getHp() > $p2->getHp()) {
@@ -158,6 +187,7 @@ function fight(Pokemon $p1, Pokemon $p2) {
     }
     echo "</div>";
 }
+
 
 
 

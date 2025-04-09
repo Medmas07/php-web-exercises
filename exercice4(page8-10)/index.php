@@ -30,15 +30,15 @@ function getArrow($column, $sort, $order) {
 <div class="container">
     <h2 >Liste des étudiants</h2>
     <table >
-        <thead class="table-light">
+        <head class="table-light">
             <tr>
                 <th><a href="?sort=id&order=<?= $nextOrder ?>" >ID <?= getArrow('id', $sort, $order) ?></a></th>
                 <th><a href="?sort=name&order=<?= $nextOrder ?>">Nom <?= getArrow('name', $sort, $order) ?></a></th>
                 <th><a href="?sort=birthday&order=<?= $nextOrder ?>">Date de naissance <?= getArrow('birthday', $sort, $order) ?></a></th>
                 <th>Détail</th>
             </tr>
-        </thead>
-        <tbody>
+        </head>
+        <body>
             <?php foreach ($etudiants as $etudiant): ?>
                 <tr>
                     <td><?= $etudiant['id'] ?></td>
@@ -49,7 +49,7 @@ function getArrow($column, $sort, $order) {
                     </td>
                 </tr>
             <?php endforeach; ?>
-        </tbody>
+        </body>
     </table>
 </div>
 

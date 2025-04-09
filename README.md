@@ -36,12 +36,17 @@ Deux méthodes sont utilisées pour gérer les interactions :
 - Fonctionnalité incluse : installation automatique de la base de données en local.
 - Nécessite un serveur MySQL fonctionnel et la saisie des informations de connexion pour initialiser la base.
 
+---
+
 ## 📁repo Student Mangement contient:
 un fichier .sql à executer pour avoir une database local
 1. accèder par le fichier login.php
 2. admins are "Youssef" , "Mouhamed"; users are 'Aymen'
 3. don't get to press forget password
    (password is password1234)
+   
+---
+
 ##📁 repo ex6
 on a utilisé le même fichier de Student Mangement (.sql)
 

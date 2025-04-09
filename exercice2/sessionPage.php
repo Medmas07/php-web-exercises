@@ -1,15 +1,15 @@
 <?php
-  session_start(); // Start the session
+  session_start(); 
 
   if (isset($_POST["reset"])){
-    $_SESSION["visits"] = 0; // Reset the session variable
+    $_SESSION["visits"] = 0; 
   }
 
   if (!isset($_SESSION["visits"]) || $_SESSION["visits"] == 0) {
-    $_SESSION["visits"] = 1; // Initialize the session variable
+    $_SESSION["visits"] = 1; 
     $message = "Welcome to the page! This is your first visit.";
   } else {
-    $_SESSION["visits"]++; // Increment the session variable
+    $_SESSION["visits"]++; 
     $message = "You have visited this page " . $_SESSION["visits"] . " times.";
   }
 
@@ -29,6 +29,6 @@
 <body>
   <h2> <?php echo $message ; ?> </h2>
   <form action = sessionPage.php method="post">
-    <button type="submit" name="reset" value="1" >Set</button>
+    <button type="submit" name="reset" value="1" >reset</button>
 </body>
 </html>

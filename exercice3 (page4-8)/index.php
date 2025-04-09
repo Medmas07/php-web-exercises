@@ -28,11 +28,7 @@ require  "Pokemon.php";?>
             display: flex;
         } 
 
-        .pokemon img {
-            display: inline-block;
-            width : 40%;
-            height: 40%;
-        }
+       
         .container0 {
             background-color: rgb(29, 204, 183);
             padding: 20px;
@@ -58,15 +54,7 @@ require  "Pokemon.php";?>
             gap: 20px;
             padding: 20px;
         }
-        .pokemon{
-            width: 50%;
-            height: 100%;
-            border: 1px solid #ccc;
-            justify-content: left;
-            border-radius: 10px;
-            padding: 10px;
-            display: flex;
-        }
+        
         .pokemon-card img {
             width: 100px;
             height: 100px;
@@ -152,6 +140,7 @@ require  "Pokemon.php";?>
                 }
             }
             fight($pokemons[0],$pokemons[1]);
+            
             $_SESSION['selected_pokemon'] = [];
         }else {
             echo "<p>Vous avez sélectionné " . count($_SESSION['selected_pokemon']) . " Pokémon. Choisissez un autre Pokémon.</p>";

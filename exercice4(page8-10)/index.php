@@ -1,21 +1,21 @@
 <?php
-$pdo = new PDO('mysql:host=localhost;dbname=etudiant_db', 'root', '');
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['option'])) {
+        $selected_option = $_POST['option'];
 
-$colonnes = ['id', 'name', 'birthday'];
-$sort = in_array($_GET['sort'] ?? '', $colonnes) ? $_GET['sort'] : 'id';
-$order = ($_GET['order'] ?? 'asc') === 'desc' ? 'desc' : 'asc';
-
-$sql = "SELECT * FROM student ORDER BY $sort $order";
-$stmt = $pdo->query($sql);
-$etudiants = $stmt->fetchAll();
-
-$nextOrder = $order === 'asc' ? 'desc' : 'asc';
-
-function getArrow($column, $sort, $order) {
-    if ($column === $sort) {
-        return $order === 'asc' ? '↑' : '↓';
+        if ($selected_option == 'Option1') {
+            header('Location: page_option1.php'); 
+            exit();
+        } elseif ($selected_option == 'Option2') {
+            header('Location: page_option2.php'); 
+            exit();
+        } elseif ($selected_option == 'Option3') {
+            header('Location: page_option3.php'); 
+            exit();
+        }
+    } else {
+        $error = "Vous devez sélectionner une option.";
     }
-    return '';
 }
 ?>
 
@@ -23,35 +23,58 @@ function getArrow($column, $sort, $order) {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Liste des étudiants</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>setup_liste_etudiant</title>
+    <style>
+        .error { color: red; }
+        form {
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            width: 300px;
+            background: #f9f9f9;
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        
+    </style>
 </head>
-<body >
+<body>
+    <h2>Choisissez une option</h2>
 
-<div class="container">
-    <h2 >Liste des étudiants</h2>
-    <table >
-        <head class="table-light">
-            <tr>
-                <th><a href="?sort=id&order=<?= $nextOrder ?>" >ID <?= getArrow('id', $sort, $order) ?></a></th>
-                <th><a href="?sort=name&order=<?= $nextOrder ?>">Nom <?= getArrow('name', $sort, $order) ?></a></th>
-                <th><a href="?sort=birthday&order=<?= $nextOrder ?>">Date de naissance <?= getArrow('birthday', $sort, $order) ?></a></th>
-                <th>Détail</th>
-            </tr>
-        </head>
-        <body>
-            <?php foreach ($etudiants as $etudiant): ?>
-                <tr>
-                    <td><?= $etudiant['id'] ?></td>
-                    <td><?= htmlspecialchars($etudiant['name']) ?></td>
-                    <td><?= $etudiant['birthday'] ?></td>
-                    <td>
-                        <a href="detailEtudiant.php?id=<?= $etudiant['id'] ?>" >&#9432</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </body>
-    </table>
-</div>
+    <?php if (isset($error)) { echo "<p style='color: red;'>$error</p>"; } ?>
 
+    <form action="" method="POST">
+        <label for="option1">installe le db localement</label>
+        <input type="radio" id="option1" name="option" value="Option1"><br><br>
+
+        <!--<label for="option2">utiliser le db deployé sur le cloud</label>
+        <input type="radio" id="option2" name="option" value="Option2"><br>
+
+        <label for="option3">Option 3</label>
+        <input type="radio" id="option3" name="option" value="Option3"><br>-->
+
+        <button type="submit">Soumettre</button>
+    </form>
 </body>
 </html>
+
+
+
+
+

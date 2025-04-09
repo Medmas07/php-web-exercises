@@ -56,6 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['mysql_user']) && isse
     </style>
 </head>
 <body>
+    <strong>veuillez verifier le bon fonctionnement du serveur MySql</strong>
     <form method="post">
         <h3>Identifiants MySQL</h3>
         <p>Veuillez entrer vos identifiants de base de données :</p>
@@ -72,5 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['mysql_user']) && isse
             <strong>Note :</strong> Ces identifiants ne seront pas stockés et ne sont utilisés que pour l'installation.
         </div>
     </form>
+    <a href='index.php'>choisir_un_autre_option</a>
 </body>
 </html>

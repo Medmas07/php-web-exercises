@@ -6,16 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        body{
-            text-align: center; 
+        body {
+            text-align: center;
             margin: 20px;
-            font-family:"Segoe UI",sans-serif;
-            background-size:cover;	
-            height:100vh;
-            
+            font-family: "Segoe UI", sans-serif;
+            background-size: cover;
+            height: 100vh;
         }
         .round { 
-            background-color: #f8d7da; 
+            background-color:rgb(233, 108, 108); 
         }  
 
         .container {
@@ -30,23 +29,125 @@
         .img {
             display: inline-block;
         }
+        .container0 {
+            max-width: 100%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .container {
+            max-width: 100%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .pokemon-card {
+            width: 150px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+        .pokemon-card img {
+            width: 100px;
+            height: 100px;
+        }
             
     </style>
 </head>
 <body>
     <?php 
-    $atk1 = new AttackPokemon(5, 10, 2, 30); // Pikachu
-    $atk2 = new AttackPokemon(4, 12, 1.5, 50); // Bulbizarre
     
-    $pikachu = new Pokemon("Pikachu", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png", 50, $atk1);
-    $bulbasaur = new Pokemon("Bulbizarre", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png", 50, $atk2);
+    echo "
+    <div id='container0' >
+    <div id='container1' style= 'background:rgb(29, 204, 183); '>les combattants
+    </div>
+    <h1>Choisissez vos Pokémon pour le combat !</h1>
+
+        <div class='container'>
+            <!-- Liste de Pokémon -->
+            <div class='pokemon-card'>
+                <img src='pikachu.gif' alt='Pikachu'>
+                <h3>Pikachu</h3>
+                <form method='POST'>
+                    <input type='hidden' name='pokemon' value='pikachu'>
+                    <button type='submit'>Choisir</button>
+                </form>
+            </div>
+
+            <div class='pokemon-card'>
+                <img src='water_pokemon.gif' alt='water_pokemon'>
+                <h3>water_pokemon</h3>
+                <form method='POST'>
+                    <input type='hidden' name='pokemon' value='water_pokemon'>
+                    <button type='submit'>Choisir</button>
+                </form>
+            </div>
+            <div class='pokemon-card'>
+                <img src='fire_pokemon.gif' alt='fire_pokemon'>
+                <h3>fire_pokemon</h3>
+                <form method='POST'>
+                    <input type='hidden' name='pokemon' value='fire_pokemon'>
+                    <button type='submit'>Choisir</button>
+                </form>
+            </div>
+            <div class='pokemon-card'>
+                <img src='plant_pokemon.gif' alt='plant_pokemon'>
+                <h3>plant_pokemon</h3>
+                <form method='POST'>
+                    <input type='hidden' name='pokemon' value='plant_pokemon'>
+                    <button type='submit'>Choisir</button>
+                </form>
+            </div>
+
+            <!-- Ajoute ici plus de Pokémon avec leur image et bouton -->
+        </div>
+
     
-    // Affichage des infos
-    $pikachu->whoAmI();
-    $bulbasaur->whoAmI();
+    </div>
+    ";?>
+    <?php 
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if(!isset($_SESSION['selected_pokemon'])){
+            session_start();
+            $_SESSION['selected_pokemon']=[];
+        }
+        $pokemonChoice = $_POST['pokemon'];
+
+        if (count($_SESSION['selected_pokemon']) < 2 && !in_array($pokemonChoice, $_SESSION['selected_pokemon'])) {
+            $_SESSION['selected_pokemon'][] = $pokemonChoice;  
+        }
     
-    // Lancement du combat
-    fight($pikachu, $bulbasaur);
+        if (count($_SESSION['selected_pokemon']) == 2) {
+            $pokemons = [];
+            foreach ($_SESSION['selected_pokemon'] as $choice) {
+                if ($choice == 'pikachu') {
+                    $atk1 = new AttackPokemon(5, 10, 2, 30); 
+                    $pokemons[] = new Pokemon("Pikachu", "pikachu.gif", 50, $atk1);
+                } elseif ($choice == 'water_pokemon') {
+                    $atk2 = new AttackPokemon(4, 12, 1.5, 50); 
+                    $pokemons[] = new Pokemon("water_pokemon", "water_pokemon.gif", 50, $atk2);
+                }else if ($pokemonChoice == 'fire_pokemon') {
+                    $atk3 = new AttackPokemon(4, 12, 1.5, 50); 
+                    $pokemons[] = new Pokemon("fire_pokemon", "fire_pokemon.gif", 50, $atk3);
+                }else if ($pokemonChoice == 'plant_pokemon') {
+                    $atk4 = new AttackPokemon(4, 12, 1.5, 50); 
+                    $pokemons[] = new Pokemon("plant_pokemon", "plant_pokemon.gif", 100, $atk4);
+                }
+            }
+        }
+    }
+    fight($pokemons[0],$pokemons[1]);
+        
+        
+    
     ?>
     
 

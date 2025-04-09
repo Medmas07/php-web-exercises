@@ -42,8 +42,8 @@ Deux méthodes sont utilisées pour gérer les interactions :
 un fichier .sql à executer pour avoir une database local
 1. accèder par le fichier login.php
 2. admins are "Youssef" , "Mouhamed"; users are 'Aymen'
-3. don't get to press forget password
-   (password is password1234)
+3. don't forget to press forget password
+   (password is password123)
    
 ---
 

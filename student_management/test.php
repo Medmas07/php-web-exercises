@@ -1,9 +1,9 @@
 <?php
-/*
+
 require_once 'config.php'; 
 
-$username = 'Aymen';
-$email = 'aymen.admin@example.com';
+$username = 'Mouhamed';
+$email = 'mouhamed.admin@example.com';
 $password = password_hash("password123", PASSWORD_DEFAULT);
 $role = 'user';
 
@@ -17,5 +17,5 @@ $stmt->execute([
 ]);
 
 echo "User inserted with hashed password.";
-*/
+
 ?>

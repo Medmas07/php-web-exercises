@@ -15,9 +15,7 @@ class Session {
         $_COOKIE[$key] = $value; 
     }
 
-    public function exists($key) {
-        return isset($_COOKIE[$key]);
-    }
+   
 
     public function delete($key) {
         setcookie($key, '', time() - 3600, "/");

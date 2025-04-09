@@ -1,21 +1,21 @@
 <?php
 require_once 'Session.php';
-$cookie = new Session();
+$session = new Session();
 
 if (isset($_GET['reset'])) {
-    $cookie->clearAll();
+    $session->clearAll();
     header("Location: index.php");
     exit();
 }
 
-$visits = $cookie->get('visits');
+$visits = $session->get('visits');
 
 if ($visits === null) {
-    $cookie->set('visits', 1);
+    $session->set('visits', 1);
     $message = "Bienvenue à notre plateforme.";
 } else {
     $visits++;
-    $cookie->set('visits', $visits);
+    $session->set('visits', $visits);
     $message = "Merci pour votre fidélité, c’est votre {$visits}ème visite.";
 }
 ?>
@@ -24,7 +24,7 @@ if ($visits === null) {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Cookies – Gestion des visites</title>
+    <title>sessions – Gestion des visites</title>
 </head>
 <body>
     <h1><?= $message ?></h1>

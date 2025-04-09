@@ -42,22 +42,120 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 ?>
 
-<h2>Edit Student</h2>
-<form method="POST" enctype="multipart/form-data">
-    Name: <input type="text" name="name" value="<?= htmlspecialchars($student['name']) ?>" required><br>
-    Birthday: <input type="date" name="birthday" value="<?= $student['birthday'] ?>" required><br>
-    Image: <input type="file" name="image"><br>
-    <img src="images/<?= $student['image'] ?>" width="100"><br>
-    Section:
-    <select name="section_id">
-        <?php
-        $sections = $pdo->query("SELECT * FROM sections")->fetchAll();
-        foreach ($sections as $section) {
-            $selected = $section['id'] == $student['section_id'] ? 'selected' : '';
-            echo "<option value='{$section['id']}' $selected>{$section['designation']}</option>";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Student</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f6f8fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-        ?>
-    </select><br><br>
-    <button type="submit">Update Student</button>
-</form>
-<a href="admin.php">← Back to Dashboard</a>
+
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="file"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        img {
+            display: block;
+            margin-bottom: 10px;
+            max-width: 100px;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>✏️ Edit Student</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <label>Name:</label>
+        <input type="text" name="name" value="<?= htmlspecialchars($student['name']) ?>" required>
+
+        <label>Birthday:</label>
+        <input type="date" name="birthday" value="<?= $student['birthday'] ?>" required>
+
+        <label>Image:</label>
+        <input type="file" name="image">
+        <img src="images/<?= htmlspecialchars($student['image']) ?>" alt="Current Image">
+
+        <label>Section:</label>
+        <select name="section_id">
+            <?php
+            $sections = $pdo->query("SELECT * FROM sections")->fetchAll();
+            foreach ($sections as $section) {
+                $selected = $section['id'] == $student['section_id'] ? 'selected' : '';
+                echo "<option value='{$section['id']}' $selected>{$section['designation']}</option>";
+            }
+            ?>
+        </select>
+
+        <button type="submit">Update Student</button>
+    </form>
+    <a href="admin.php">← Back to Dashboard</a>
+</div>
+
+</body>
+</html>

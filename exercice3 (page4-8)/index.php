@@ -1,4 +1,6 @@
-<?php require  "Pokemon.php"?>
+<?php 
+session_start();
+require  "Pokemon.php";?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,40 +28,50 @@
             display: flex;
         } 
 
-        .img {
+        .pokemon img {
             display: inline-block;
+            width : 40%;
+            height: 40%;
         }
         .container0 {
-            max-width: 100%;
-            margin: auto;
+            background-color: rgb(29, 204, 183);
             padding: 20px;
-            border: 1px solid #ccc;
             border-radius: 10px;
-            display: flex;
-            flex-wrap: wrap;
         }
         .container {
-            max-width: 100%;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
         }
         .pokemon-card {
             width: 150px;
-            margin: 10px;
             border: 1px solid #ccc;
             border-radius: 10px;
             padding: 10px;
-            text-align: center;
+        }
+        .container1 {
+            display: flex;
+            justify-content: center;
+            border: 1px solid #ccc;
+            gap: 20px;
+            padding: 20px;
+        }
+        .pokemon{
+            width: 50%;
+            height: 100%;
+            border: 1px solid #ccc;
+            justify-content: left;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
         }
         .pokemon-card img {
             width: 100px;
             height: 100px;
         }
-            
+        
     </style>
 </head>
 <body>
@@ -72,7 +84,6 @@
     <h1>Choisissez vos Pokémon pour le combat !</h1>
 
         <div class='container'>
-            <!-- Liste de Pokémon -->
             <div class='pokemon-card'>
                 <img src='pikachu.gif' alt='Pikachu'>
                 <h3>Pikachu</h3>
@@ -107,7 +118,6 @@
                 </form>
             </div>
 
-            <!-- Ajoute ici plus de Pokémon avec leur image et bouton -->
         </div>
 
     
@@ -116,7 +126,6 @@
     <?php 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(!isset($_SESSION['selected_pokemon'])){
-            session_start();
             $_SESSION['selected_pokemon']=[];
         }
         $pokemonChoice = $_POST['pokemon'];
@@ -134,17 +143,21 @@
                 } elseif ($choice == 'water_pokemon') {
                     $atk2 = new AttackPokemon(4, 12, 1.5, 50); 
                     $pokemons[] = new Pokemon("water_pokemon", "water_pokemon.gif", 50, $atk2);
-                }else if ($pokemonChoice == 'fire_pokemon') {
+                }else if ($choice == 'fire_pokemon') {
                     $atk3 = new AttackPokemon(4, 12, 1.5, 50); 
                     $pokemons[] = new Pokemon("fire_pokemon", "fire_pokemon.gif", 50, $atk3);
-                }else if ($pokemonChoice == 'plant_pokemon') {
+                }else if ($choice == 'plant_pokemon') {
                     $atk4 = new AttackPokemon(4, 12, 1.5, 50); 
                     $pokemons[] = new Pokemon("plant_pokemon", "plant_pokemon.gif", 100, $atk4);
                 }
             }
+            fight($pokemons[0],$pokemons[1]);
+            $_SESSION['selected_pokemon'] = [];
+        }else {
+            echo "<p>Vous avez sélectionné " . count($_SESSION['selected_pokemon']) . " Pokémon. Choisissez un autre Pokémon.</p>";
         }
     }
-    fight($pokemons[0],$pokemons[1]);
+    
         
         
     

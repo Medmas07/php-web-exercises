@@ -1,21 +1,4 @@
-<?php
-    
-   /* class AttackPokemon{
 
-    }
-    
-    class Pokemon{
-        private $name;
-        private $imgUrl;
-        private $hp;
-        private $attackPokemon;
-        public function __construct($name,$imgUrl,$hp,$attackPokemon)
-        {
-            
-        }
-    }*/
-    
-?>
 <?php
 
 class AttackPokemon {
@@ -106,24 +89,10 @@ class Pokemon {
 }
 
 function affiche_pokemon(Pokemon $p1, Pokemon $p2) {
-    $detailId = "detail_" . $p1->getName();
-    echo "
-    <div class='container'>
-        <div class='pok'>
-            <img src='" . $p1->getImgUrl() . "' width='100'>
-            <a href='javascript:void(0)' onclick='toggleDiv(\"$detailId\")'>WhoAmI</a>
-        </div>
-        <div id='$detailId' style='display:none;'>
-            <p>" . $p1->whoAmI2() . "</p>
-        </div>
-        <div class='pok'>
-            <img src='" . $p2->getImgUrl() . "' width='100'>
-            <a href='javascript:void(0)' onclick='toggleDiv(\"$detailId\")'>WhoAmI</a>
-        </div>
-        <div id='$detailId' style='display:none;'>
-            <p>" . $p2->whoAmI2() . "</p>
-        </div>
-    </div>";
+    echo "<div class='container1'>";
+    echo $p1->getStatsHTML();
+    echo $p2->getStatsHTML();
+    echo "</div>";
 }
 
 function fight(Pokemon $p1, Pokemon $p2) {

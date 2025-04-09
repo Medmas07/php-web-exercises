@@ -16,9 +16,9 @@ class AttackPokemon {
 }
 
 class Pokemon {
-    private $name;
-    private $imgUrl;
-    private $hp;
+    protected $name;
+    protected $imgUrl;
+    protected $hp;
     public $attackPokemon;
 
     public function __construct($name, $imgUrl, $hp, AttackPokemon $attackPokemon) {
@@ -63,12 +63,18 @@ class Pokemon {
         if ($rand <= $this->attackPokemon->probabilitySpecialAttack) {
             $baseDamage = rand($this->attackPokemon->attackMinimal, $this->attackPokemon->attackMaximal);
             $damage = $baseDamage * $this->attackPokemon->specialAttack;
-            echo "<span>{$rand}</span><br>";
-            echo $this->name . " utilise une attaque SPÉCIALE et inflige " . $damage . " dégâts à " . $target->getName() . "!<br>";
+            echo "<div style='display: flex; flex-direction: column; align-items: center; text-align: center; width: 45%;'>
+            <span style='font-size: 20px; font-weight: bold;'>{$rand}</span>
+            <div>{$this->name} utilise une attaque SPÉCIALE et inflige {$damage} dégâts à {$target->getName()} !</div>
+            </div>";
+
         } else {
             $damage = rand($this->attackPokemon->attackMinimal, $this->attackPokemon->attackMaximal);
-            echo "<span>{$rand}</span>";
-            echo $this->name . " attaque normalement(attaque) et inflige " . $damage . " dégâts à " . $target->getName() . "!<br> ";
+            echo "<div style='display: flex; flex-direction: column; align-items: center; text-align: center; width: 45%;'>
+            <span style='font-size: 20px; font-weight: bold;'>{$rand}</span>
+            <div>{$this->name} attaque normalement et inflige {$damage} dégâts à {$target->getName()} !</div>
+        </div>";
+
         }
        
 
@@ -140,14 +146,17 @@ function fight(Pokemon $p1, Pokemon $p2) {
         $round++;
     }
 
-    echo "<hr><strong>Résultat du combat :</strong><br>";
+    echo "<div style='background-color:rgb(59, 183, 96);'><strong style='font-size:50px;'>Résultat du combat :</strong><br>";
     if ($p1->getHp() > $p2->getHp()) {
         echo $p1->getName() . " est le vainqueur !<br>";
+        echo "<img src='{$p1->getImgUrl()}' style='height:70%;width:70%'>";
     } elseif ($p2->getHp() > $p1->getHp()) {
         echo $p2->getName() . " est le vainqueur !<br>";
+        echo "<img src='{$p2->getImgUrl()}' style='height:70%;width:70%'>";
     } else {
         echo "Match nul !<br>";
     }
+    echo "</div>";
 }
 
 

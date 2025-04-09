@@ -1,6 +1,8 @@
 <?php 
 session_start();
-require  "Pokemon.php";?>
+require  "Pokemon.php";
+//require  "SpecialPokemon.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,7 +110,7 @@ require  "Pokemon.php";?>
 
         </div>
 
-    
+    <br>
     </div>
     ";?>
     <?php 

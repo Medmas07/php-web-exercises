@@ -1,6 +1,5 @@
 
 <?php
-
 class AttackPokemon {
     public $attackMinimal;
     public $attackMaximal;
@@ -16,10 +15,10 @@ class AttackPokemon {
 }
 
 class Pokemon {
-    private $name;
-    private $imgUrl;
-    private $hp;
-    private $attackPokemon;
+    protected $name;
+    protected $imgUrl;
+    protected $hp;
+    public $attackPokemon;
 
     public function __construct($name, $imgUrl, $hp, AttackPokemon $attackPokemon) {
         $this->name = $name;
@@ -63,10 +62,18 @@ class Pokemon {
         if ($rand <= $this->attackPokemon->probabilitySpecialAttack) {
             $baseDamage = rand($this->attackPokemon->attackMinimal, $this->attackPokemon->attackMaximal);
             $damage = $baseDamage * $this->attackPokemon->specialAttack;
-            echo $this->name . " utilise une attaque SPÉCIALE et inflige " . $damage . " dégâts à " . $target->getName() . "!<br>";
+            echo "<div style='display: flex; flex-direction: column; align-items: center; text-align: center; width: 45%;'>
+            <span style='font-size: 20px; font-weight: bold;'>{$rand}</span>
+            <div>{$this->name} utilise une attaque SPÉCIALE et inflige {$damage} dégâts à {$target->getName()} !</div>
+            </div>";
+
         } else {
             $damage = rand($this->attackPokemon->attackMinimal, $this->attackPokemon->attackMaximal);
-            echo $this->name . " attaque normalement et inflige " . $damage . " dégâts à " . $target->getName() . "!<br> ";
+            echo "<div style='display: flex; flex-direction: column; align-items: center; text-align: center; width: 45%;'>
+            <span style='font-size: 20px; font-weight: bold;'>{$rand}</span>
+            <div>{$this->name} attaque normalement et inflige {$damage} dégâts à {$target->getName()} !</div>
+        </div>";
+
         }
        
 
@@ -88,36 +95,99 @@ class Pokemon {
     }
 }
 
+
 function affiche_pokemon(Pokemon $p1, Pokemon $p2) {
-    echo "<div class='container1'>";
+   /* echo "<div class='container1'>";
     echo $p1->getStatsHTML();
     echo $p2->getStatsHTML();
+    echo "</div>";*/
+    echo "<div style='display: flex; justify-content: center; gap: 20px;'>";
+
+    echo "<div style='border: 1px solid #ccc; border-radius: 10px; padding: 10px; width: 300px;'>";
+    echo "<img src='{$p1->getImgUrl()}' style='width: 40%;height:40%;'><br>";
+    echo "<strong>{$p1->getName()}</strong><br>";
+    echo "Points : {$p1->getHp()}<br>";
+    echo "Min Attack Points : {$p1->attackPokemon->attackMinimal}<br>";
+    echo "Max Attack Points : {$p1->attackPokemon->attackMaximal}<br>";
+    echo "Special Attack : {$p1->attackPokemon->specialAttack}<br>";
+    echo "Probability Special Attack : {$p1->attackPokemon->probabilitySpecialAttack}%<br>";
     echo "</div>";
+
+    echo "<div style='border: 1px solid #ccc; border-radius: 10px; padding: 10px; width: 300px;'>";
+    echo "<img src='{$p2->getImgUrl()}' style='width: 40%; height:40%;'><br>";
+    echo "<strong>{$p2->getName()}</strong><br>";
+    echo "Points : {$p2->getHp()}<br>";
+    echo "Min Attack Points : {$p2->attackPokemon->attackMinimal}<br>";
+    echo "Max Attack Points : {$p2->attackPokemon->attackMaximal}<br>";
+    echo "Special Attack : {$p2->attackPokemon->specialAttack}<br>";
+    echo "Probability Special Attack : {$p2->attackPokemon->probabilitySpecialAttack}%<br>";
+    echo "</div>";
+
+    echo "</div>";
+
+   
+
 }
 
 function fight(Pokemon $p1, Pokemon $p2) {
     $round = 1;
     while (!$p1->isDead() && !$p2->isDead()) {
-        echo "<div class='round' ><hr><strong >ROUND $round</strong><br>";
-        $p1->attack($p2);
+        affiche_pokemon($p1,$p2);
+        echo "<div style='background-color: #f4bcbc; margin: 20px auto; padding: 10px; width: 80%; border-radius: 8px;'>
+        <strong >ROUND $round</strong><br>
+        <div style='display: flex; justify-content: space-around;'>";
+        if ($p1 instanceof FirePokemon && $p2 instanceof PlantPokemon) {
+            $p1->attackPlant($p2);
+        } elseif ($p1 instanceof FirePokemon && $p2 instanceof WaterPokemon) {
+            $p1->attackWater($p2);
+        } elseif ($p1 instanceof WaterPokemon && $p2 instanceof FirePokemon) {
+            $p1->attackFire($p2);
+        } elseif ($p1 instanceof WaterPokemon && $p2 instanceof PlantPokemon) {
+            $p1->attackPlant($p2);
+        } elseif ($p1 instanceof PlantPokemon && $p2 instanceof WaterPokemon) {
+            $p1->attackWater($p2);
+        } elseif ($p1 instanceof PlantPokemon && $p2 instanceof FirePokemon) {
+            $p1->attackFire($p2);
+        } else {
+            $p1->attack($p2);
+        }
 
-        if (!$p2->isDead()) {
+        if ($p2->isDead()) break;
+
+        if ($p2 instanceof FirePokemon && $p1 instanceof PlantPokemon) {
+            $p2->attackPlant($p1);
+        } elseif ($p2 instanceof FirePokemon && $p1 instanceof WaterPokemon) {
+            $p2->attackWater($p1);
+        } elseif ($p2 instanceof WaterPokemon && $p1 instanceof FirePokemon) {
+            $p2->attackFire($p1);
+        } elseif ($p2 instanceof WaterPokemon && $p1 instanceof PlantPokemon) {
+            $p2->attackPlant($p1);
+        } elseif ($p2 instanceof PlantPokemon && $p1 instanceof WaterPokemon) {
+            $p2->attackWater($p1);
+        } elseif ($p2 instanceof PlantPokemon && $p1 instanceof FirePokemon) {
+            $p2->attackFire($p1);
+        } else {
             $p2->attack($p1);
         }
-        echo "</div><br>";
-        affiche_pokemon($p1,$p2);
+        echo "</div></div><br>";
+        
         $round++;
     }
+    echo "</div></div>";
 
-    echo "<hr><strong>Résultat du combat :</strong><br>";
+    echo "<div style='background-color:rgb(59, 183, 96);'><strong style='font-size:50px;'>Résultat du combat :</strong><br>";
     if ($p1->getHp() > $p2->getHp()) {
         echo $p1->getName() . " est le vainqueur !<br>";
+        echo "<img src='{$p1->getImgUrl()}' style='height:70%;width:70%'>";
     } elseif ($p2->getHp() > $p1->getHp()) {
         echo $p2->getName() . " est le vainqueur !<br>";
+        echo "<img src='{$p2->getImgUrl()}' style='height:70%;width:70%'>";
     } else {
         echo "Match nul !<br>";
     }
+    echo "</div>";
 }
+
 
 
 

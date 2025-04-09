@@ -33,8 +33,6 @@
         new Etudiant("Aymen", [11, 13, 18, 7, 10, 13, 2, 5, 1]),
         new Etudiant("Skander", [15, 9, 8, 16])
     ];
-
-    // Affichage
     foreach ($etudiants as $etu) {
         echo "<div class='etudiant'>";
         echo "<strong>{$etu->nom}</strong><br>";

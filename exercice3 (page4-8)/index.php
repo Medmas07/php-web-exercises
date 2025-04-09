@@ -1,6 +1,8 @@
 <?php 
 session_start();
-require  "Pokemon.php";?>
+require  "Pokemon.php";
+require_once "SpecialPokemon.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,11 +30,7 @@ require  "Pokemon.php";?>
             display: flex;
         } 
 
-        .pokemon img {
-            display: inline-block;
-            width : 40%;
-            height: 40%;
-        }
+       
         .container0 {
             background-color: rgb(29, 204, 183);
             padding: 20px;
@@ -58,15 +56,7 @@ require  "Pokemon.php";?>
             gap: 20px;
             padding: 20px;
         }
-        .pokemon{
-            width: 50%;
-            height: 100%;
-            border: 1px solid #ccc;
-            justify-content: left;
-            border-radius: 10px;
-            padding: 10px;
-            display: flex;
-        }
+        
         .pokemon-card img {
             width: 100px;
             height: 100px;
@@ -120,7 +110,7 @@ require  "Pokemon.php";?>
 
         </div>
 
-    
+    <br>
     </div>
     ";?>
     <?php 
@@ -142,16 +132,17 @@ require  "Pokemon.php";?>
                     $pokemons[] = new Pokemon("Pikachu", "pikachu.gif", 50, $atk1);
                 } elseif ($choice == 'water_pokemon') {
                     $atk2 = new AttackPokemon(4, 12, 1.5, 50); 
-                    $pokemons[] = new Pokemon("water_pokemon", "water_pokemon.gif", 50, $atk2);
+                    $pokemons[] = new WaterPokemon("water_pokemon", "water_pokemon.gif", 50, $atk2);
                 }else if ($choice == 'fire_pokemon') {
                     $atk3 = new AttackPokemon(4, 12, 1.5, 50); 
-                    $pokemons[] = new Pokemon("fire_pokemon", "fire_pokemon.gif", 50, $atk3);
+                    $pokemons[] = new FirePokemon("fire_pokemon", "fire_pokemon.gif", 50, $atk3);
                 }else if ($choice == 'plant_pokemon') {
                     $atk4 = new AttackPokemon(4, 12, 1.5, 50); 
-                    $pokemons[] = new Pokemon("plant_pokemon", "plant_pokemon.gif", 100, $atk4);
+                    $pokemons[] = new PlantPokemon("plant_pokemon", "plant_pokemon.gif", 100, $atk4);
                 }
             }
             fight($pokemons[0],$pokemons[1]);
+            
             $_SESSION['selected_pokemon'] = [];
         }else {
             echo "<p>Vous avez sélectionné " . count($_SESSION['selected_pokemon']) . " Pokémon. Choisissez un autre Pokémon.</p>";

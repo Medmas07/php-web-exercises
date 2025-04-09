@@ -2,7 +2,7 @@
 $host = 'localhost';
 $dbname = 'student_management';
 $username = 'root';
-$password = 'mysql.#'; 
+$password = 'mysql.gara321#'; 
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);

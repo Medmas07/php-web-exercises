@@ -45,7 +45,6 @@ class Pokemon {
         $this->attackPokemon = $attackPokemon;
     }
 
-    // Getters et setters
     public function getName() {
         return $this->name;
     }
@@ -89,6 +88,20 @@ class Pokemon {
        
 
         $target->setHp($target->getHp() - $damage);
+    }
+     public function getStatsHTML() {
+        return "
+        <div class='pokemon'>
+            <h3>{$this->name}</h3>
+            <img src='{$this->imgUrl}' width='100'><br>
+            <div class='stats'>
+                Points : {$this->hp}<br>
+                Min Attack Points : {$this->attackPokemon->attackMinimal}<br>
+                Max Attack Points : {$this->attackPokemon->attackMaximal}<br>
+                Special Attack : {$this->attackPokemon->specialAttack}<br>
+                Probability Special Attack : {$this->attackPokemon->probabilitySpecialAttack}
+            </div>
+        </div>";
     }
 }
 

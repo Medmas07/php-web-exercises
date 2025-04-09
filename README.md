@@ -47,7 +47,7 @@ un fichier .sql à executer pour avoir une database local
    
 ---
 
-##📁 repo ex6
+## 📁repo ex6
 on a utilisé le même fichier de Student Mangement (.sql)
 
 

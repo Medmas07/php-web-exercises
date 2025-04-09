@@ -21,7 +21,6 @@ class Etudiant {
                 echo "<div class='note $class'>$note</div>";
             }
         }
-
         public function moyenne() {
             return array_sum($this->notes) / count($this->notes);
         }

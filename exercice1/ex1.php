@@ -52,8 +52,6 @@
             new Etudiant("Skander", [15, 9, 8, 16])
         ];
     }
-
-    // Traitement du formulaire
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $nomSaisi = trim($_POST["nom"]);
         $notesSaisies = explode(",", $_POST["notes"]);
@@ -66,7 +64,6 @@
                 $notesPropres[] = floatval($note);
             }
         }
-
         // Vérifier si l'étudiant existe déjà
         $existe = false;
         foreach ($etudiants as $e) {
@@ -75,7 +72,6 @@
                 break;
             }
         }
-
         if (!$existe && count($notesPropres) > 0) {
             $etudiants[] = new Etudiant($nomSaisi, $notesPropres);
             $_SESSION['etudiants'] = $etudiants;
@@ -83,7 +79,6 @@
             echo "<p style='color:red;'> Étudiant '$nomSaisi' existe déjà !</p>";
         }
     }
-
     foreach ($etudiants as $etu) {
         echo "<div class='etudiant'>";
         echo "<strong>{$etu->nom}</strong><br>";
